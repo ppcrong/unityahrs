@@ -1,0 +1,12 @@
+ext {
+    extraLibrary = [
+            // KLog
+            'com.github.zhaokaiqiang.klog:library:1.6.0',
+            // rxandroid
+            'io.reactivex.rxjava2:rxandroid:2.0.2',
+            // Apollo
+            "com.github.lsxiao.Apollo:core:1.0.2",
+            // Apollo IPC
+            "com.github.lsxiao.Apollo:ipc:1.0.2"
+    ]
+}
