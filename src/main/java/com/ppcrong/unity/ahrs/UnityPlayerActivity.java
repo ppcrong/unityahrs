@@ -143,14 +143,24 @@ public class UnityPlayerActivity extends Activity {
     public void onNotifyAhrsMoveEvent(BleEvents.NotifyAhrsMoveEvent event) {
 
         KLog.i("AhrsMove: " + event.toString());
-        UnityPlayer.UnitySendMessage("Helicopter", "setMovement", event.toString());
+        setMovement(event);
     }
 
     @Receive("BleEvents.NotifyAhrsRotateEvent")
     public void onNotifyAhrsRotateEvent(BleEvents.NotifyAhrsRotateEvent event) {
 
         KLog.i("AhrsRotate: " + event.toString());
-        UnityPlayer.UnitySendMessage("Helicopter", "setRotate", event.toString());
+        setRotation(event);
     }
     // endregion [Apollo]
+
+    // region [Private Function]
+    private void setMovement(BleEvents.NotifyAhrsMoveEvent event) {
+        UnityPlayer.UnitySendMessage("Helicopter", "setMovement", event.toString());
+    }
+
+    private void setRotation(BleEvents.NotifyAhrsRotateEvent event) {
+        UnityPlayer.UnitySendMessage("Helicopter", "setRotation", event.toString());
+    }
+    // endregion [Private Function]
 }
