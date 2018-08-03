@@ -9,7 +9,7 @@
 *.class
 
 # Generated files
-bin/
+# bin/ for Unity assets/bin
 gen/
 out/
 

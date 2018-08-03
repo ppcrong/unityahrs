@@ -31,6 +31,10 @@ public class UnityPlayerActivity extends Activity {
         mUnityPlayer.requestFocus();
 
         mBinder = Apollo.bind(this);
+
+        // TestOnly
+//        setMovement(new BleEvents.NotifyAhrsMoveEvent(10, 0, 0));
+//        setRotation(new BleEvents.NotifyAhrsRotateEvent(0, 1, 0, 0));
     }
 
     @Override
