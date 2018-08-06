@@ -26,7 +26,7 @@ android {
         ndk {
             abiFilters 'armeabi-v7a'
         }
-        versionCode 1808031700
+        versionCode 1808061200
         versionName '1.0.0.1'
     }
 
