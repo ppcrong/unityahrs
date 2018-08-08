@@ -3,7 +3,9 @@ package com.ppcrong.unity.ahrs;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.Window;
@@ -35,6 +37,7 @@ public class UnityPlayerActivity extends Activity {
         // TestOnly
 //        setMovement(new BleEvents.NotifyAhrsMoveEvent(10, 0, 0));
 //        setRotation(new BleEvents.NotifyAhrsRotateEvent(0, 1, 0, 0));
+//        doFakeDataTest();
     }
 
     @Override
@@ -167,4 +170,117 @@ public class UnityPlayerActivity extends Activity {
         UnityPlayer.UnitySendMessage("Helicopter", "setRotation", event.toString());
     }
     // endregion [Private Function]
+
+    // region [Task]
+    private void doFakeDataTest() {
+
+        KLog.i("start FakeData test");
+        mFakeDataTask = new FakeDataTask();
+        mFakeDataTask.execute();
+    }
+
+    private FakeDataTask mFakeDataTask;
+    private float[][] mRotations = new float[][]{
+            {0, 0, 0, 1},
+            {0.1f, 0, 0, 1},
+            {0.2f, 0, 0, 1},
+            {0.3f, 0, 0, 1},
+            {0.4f, 0, 0, 1},
+            {0.5f, 0, 0, 1},
+            {0.6f, 0, 0, 1},
+            {0.7f, 0, 0, 1},
+            {0.8f, 0, 0, 1},
+            {0.9f, 0, 0, 1},
+            {1, 0, 0, 1},
+            {0.9f, 0, 0, 1},
+            {0.8f, 0, 0, 1},
+            {0.7f, 0, 0, 1},
+            {0.6f, 0, 0, 1},
+            {0.5f, 0, 0, 1},
+            {0.4f, 0, 0, 1},
+            {0.3f, 0, 0, 1},
+            {0.2f, 0, 0, 1},
+            {0.1f, 0, 0, 1},
+            {0, 0, 0, 1}
+    };
+    private float[][] mMovements = new float[][]{
+            {0, 0, 0},
+            {1, 1, 1},
+            {2, 2, 2},
+            {3, 3, 3},
+            {4, 4, 4},
+            {5, 5, 5},
+            {6, 6, 6},
+            {7, 7, 7},
+            {8, 8, 8},
+            {9, 9, 9},
+            {10, 10, 10},
+            {9, 9, 9},
+            {8, 8, 8},
+            {7, 7, 7},
+            {6, 6, 6},
+            {5, 5, 5},
+            {4, 4, 4},
+            {3, 3, 3},
+            {2, 2, 2},
+            {1, 1, 1},
+            {0, 0, 0}
+    };
+
+    private class FakeDataTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+            // Wait
+            try {
+                Thread.sleep(10000);
+            } catch (InterruptedException e) {
+                KLog.i(Log.getStackTraceString(e));
+            }
+
+            // Rotation
+            for (int i = 0; i < mRotations.length; i++) {
+
+                setRotation(new BleEvents.NotifyAhrsRotateEvent(mRotations[i][0], mRotations[i][1], mRotations[i][2], mRotations[i][3]));
+                KLog.i("qx: " + mRotations[i][0] + ", qy: " + mRotations[i][1] + ", qz: " + mRotations[i][2] + ", qw: " + mRotations[i][3]);
+
+                // Wait
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+                    KLog.i(Log.getStackTraceString(e));
+                }
+            }
+
+            // Wait
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                KLog.i(Log.getStackTraceString(e));
+            }
+
+            // Movement
+            for (int i = 0; i < mMovements.length; i++) {
+
+                setMovement(new BleEvents.NotifyAhrsMoveEvent(mMovements[i][0], mMovements[i][1], mMovements[i][2]));
+                KLog.i("x: " + mMovements[i][0] + ", y: " + mMovements[i][1] + ", z: " + mMovements[i][2]);
+
+                // Wait
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+                    KLog.i(Log.getStackTraceString(e));
+                }
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+
+            KLog.i("FakeData is stopped...");
+            super.onPostExecute(aVoid);
+        }
+    }
 }
