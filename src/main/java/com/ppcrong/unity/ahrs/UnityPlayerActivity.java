@@ -34,6 +34,10 @@ public class UnityPlayerActivity extends Activity {
 
         mBinder = Apollo.bind(this);
 
+        // Tune interpolant
+        setQuaternionT(0.05f);
+        setMovementT(0.05f);
+
         // TestOnly
 //        setMovement(new BleEvents.NotifyAhrsMoveEvent(10, 0, 0));
 //        setRotation(new BleEvents.NotifyAhrsRotateEvent(0, 1, 0, 0));
@@ -168,6 +172,14 @@ public class UnityPlayerActivity extends Activity {
 
     private void setRotation(BleEvents.NotifyAhrsRotateEvent event) {
         UnityPlayer.UnitySendMessage("Helicopter", "setRotation", event.toString());
+    }
+
+    private void setMovementT(float t) {
+        UnityPlayer.UnitySendMessage("Helicopter", "setMovementT", Float.toString(t));
+    }
+
+    private void setQuaternionT(float t) {
+        UnityPlayer.UnitySendMessage("Helicopter", "setQuaternionT", Float.toString(t));
     }
     // endregion [Private Function]
 
