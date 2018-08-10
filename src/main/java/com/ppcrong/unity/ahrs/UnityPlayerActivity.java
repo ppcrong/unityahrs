@@ -34,13 +34,10 @@ public class UnityPlayerActivity extends Activity {
 
         mBinder = Apollo.bind(this);
 
-        // Tune interpolant
-        setQuaternionT(0.05f);
-        setMovementT(0.05f);
+        initUnityPlayer();
+        initUnityCamera();
 
         // TestOnly
-//        setMovement(new BleEvents.NotifyAhrsMoveEvent(10, 0, 0));
-//        setRotation(new BleEvents.NotifyAhrsRotateEvent(0, 1, 0, 0));
 //        doFakeDataTest();
     }
 
@@ -166,20 +163,74 @@ public class UnityPlayerActivity extends Activity {
     // endregion [Apollo]
 
     // region [Private Function]
-    private void setMovement(BleEvents.NotifyAhrsMoveEvent event) {
-        UnityPlayer.UnitySendMessage("Helicopter", "setMovement", event.toString());
-    }
-
     private void setRotation(BleEvents.NotifyAhrsRotateEvent event) {
         UnityPlayer.UnitySendMessage("Helicopter", "setRotation", event.toString());
     }
 
-    private void setMovementT(float t) {
-        UnityPlayer.UnitySendMessage("Helicopter", "setMovementT", Float.toString(t));
+    private void setMovement(BleEvents.NotifyAhrsMoveEvent event) {
+        UnityPlayer.UnitySendMessage("Helicopter", "setMovement", event.toString());
     }
 
-    private void setQuaternionT(float t) {
-        UnityPlayer.UnitySendMessage("Helicopter", "setQuaternionT", Float.toString(t));
+    private void setRotateInterpolant(float interpolant) {
+        UnityPlayer.UnitySendMessage("Helicopter", "setRotateInterpolant", Float.toString(interpolant));
+    }
+
+    private void setMoveInterpolant(float interpolant) {
+        UnityPlayer.UnitySendMessage("Helicopter", "setMoveInterpolant", Float.toString(interpolant));
+    }
+
+    /*
+     * Rotate type
+     * 0: Direct
+     * 1: Smooth
+     */
+    private void setRotateType(int type) {
+        UnityPlayer.UnitySendMessage("Helicopter", "setRotateType", Integer.toString(type));
+    }
+
+    /*
+     * Move type
+     * 0: Direct
+     * 1: Smooth
+     */
+    private void setMoveType(int type) {
+        UnityPlayer.UnitySendMessage("Helicopter", "setMoveType", Integer.toString(type));
+    }
+
+    private void setMoveScale(float scale) {
+        UnityPlayer.UnitySendMessage("Helicopter", "setMoveScale", Float.toString(scale));
+    }
+
+    private void setIsFollowPlayer(boolean b) {
+        UnityPlayer.UnitySendMessage("MainCamera", "setIsFollowPlayer", b ? "True": "False");
+    }
+
+    private void setCamMoveSmoothTime(float time) {
+        UnityPlayer.UnitySendMessage("MainCamera", "setMoveSmoothTime", Float.toString(time));
+    }
+
+    private void setCamMoveInterpolant(float interpolant) {
+        UnityPlayer.UnitySendMessage("MainCamera", "setMoveInterpolant", Float.toString(interpolant));
+    }
+
+    private void initUnityPlayer() {
+
+        // Set interpolant
+        setRotateInterpolant(0.8f);
+        setMoveInterpolant(0.1f);
+
+        // Set type
+        setRotateType(0);
+        setMoveType(1);
+
+        // Set movement scale
+        setMoveScale(1f);
+    }
+
+    private void initUnityCamera() {
+
+        setIsFollowPlayer(false);
+        setCamMoveSmoothTime(0.05f);
     }
     // endregion [Private Function]
 
@@ -226,6 +277,54 @@ public class UnityPlayerActivity extends Activity {
             {7, 7, 7},
             {8, 8, 8},
             {9, 9, 9},
+            {10, 10, 10},
+            {11, 11, 11},
+            {12, 12, 12},
+            {13, 13, 13},
+            {14, 14, 14},
+            {15, 15, 15},
+            {16, 16, 16},
+            {17, 17, 17},
+            {18, 18, 18},
+            {19, 19, 19},
+            {20, 20, 20},
+            {21, 21, 21},
+            {22, 22, 22},
+            {23, 23, 23},
+            {24, 24, 24},
+            {25, 25, 25},
+            {26, 26, 26},
+            {27, 27, 27},
+            {28, 28, 28},
+            {29, 29, 29},
+            {30, 30, 30},
+            {31, 31, 31},
+            {32, 32, 32},
+            {33, 33, 33},
+            {34, 34, 34},
+            {33, 33, 33},
+            {32, 32, 32},
+            {31, 31, 31},
+            {30, 30, 30},
+            {29, 29, 29},
+            {28, 28, 28},
+            {27, 27, 27},
+            {26, 26, 26},
+            {25, 25, 25},
+            {24, 24, 24},
+            {23, 23, 23},
+            {22, 22, 22},
+            {21, 21, 21},
+            {20, 20, 20},
+            {19, 19, 19},
+            {18, 18, 18},
+            {17, 17, 17},
+            {16, 16, 16},
+            {15, 15, 15},
+            {14, 14, 14},
+            {13, 13, 13},
+            {12, 12, 12},
+            {11, 11, 11},
             {10, 10, 10},
             {9, 9, 9},
             {8, 8, 8},
