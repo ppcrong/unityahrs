@@ -19,6 +19,10 @@ import com.unity3d.player.UnityPlayer;
 
 public class UnityPlayerActivity extends Activity {
 
+    private static final String GAME_OBJECT_HELICOPTER = "Helicopter";
+    private static final String GAME_OBJECT_BAT = "BatNewCenter";
+    private static final String PLAYER_NAME = GAME_OBJECT_BAT;
+    private static final String MAIN_CAMERA = "MainCamera";
     private ApolloBinder mBinder;
     protected UnityPlayer mUnityPlayer; // don't change the name of this variable; referenced from native code
 
@@ -53,9 +57,6 @@ public class UnityPlayerActivity extends Activity {
     // Quit Unity
     @Override
     protected void onDestroy() {
-        if (mBinder != null) {
-            mBinder.unbind();
-        }
         mUnityPlayer.quit();
         super.onDestroy();
     }
@@ -65,6 +66,10 @@ public class UnityPlayerActivity extends Activity {
     protected void onPause() {
         super.onPause();
         mUnityPlayer.pause();
+        if (mBinder != null) {
+            mBinder.unbind();
+        }
+        onBackPressed();
     }
 
     // Resume Unity
@@ -151,7 +156,7 @@ public class UnityPlayerActivity extends Activity {
     public void onNotifyAhrsMoveEvent(BleEvents.NotifyAhrsMoveEvent event) {
 
         KLog.i("AhrsMove: " + event.toString());
-        setMovement(event);
+//        setMovement(event);
     }
 
     @Receive("BleEvents.NotifyAhrsRotateEvent")
@@ -164,19 +169,19 @@ public class UnityPlayerActivity extends Activity {
 
     // region [Private Function]
     private void setRotation(BleEvents.NotifyAhrsRotateEvent event) {
-        UnityPlayer.UnitySendMessage("Helicopter", "setRotation", event.toString());
+        UnityPlayer.UnitySendMessage(PLAYER_NAME, "setRotation", event.toString());
     }
 
     private void setMovement(BleEvents.NotifyAhrsMoveEvent event) {
-        UnityPlayer.UnitySendMessage("Helicopter", "setMovement", event.toString());
+        UnityPlayer.UnitySendMessage(PLAYER_NAME, "setMovement", event.toString());
     }
 
     private void setRotateInterpolant(float interpolant) {
-        UnityPlayer.UnitySendMessage("Helicopter", "setRotateInterpolant", Float.toString(interpolant));
+        UnityPlayer.UnitySendMessage(PLAYER_NAME, "setRotateInterpolant", Float.toString(interpolant));
     }
 
     private void setMoveInterpolant(float interpolant) {
-        UnityPlayer.UnitySendMessage("Helicopter", "setMoveInterpolant", Float.toString(interpolant));
+        UnityPlayer.UnitySendMessage(PLAYER_NAME, "setMoveInterpolant", Float.toString(interpolant));
     }
 
     /*
@@ -185,7 +190,7 @@ public class UnityPlayerActivity extends Activity {
      * 1: Smooth
      */
     private void setRotateType(int type) {
-        UnityPlayer.UnitySendMessage("Helicopter", "setRotateType", Integer.toString(type));
+        UnityPlayer.UnitySendMessage(PLAYER_NAME, "setRotateType", Integer.toString(type));
     }
 
     /*
@@ -194,23 +199,23 @@ public class UnityPlayerActivity extends Activity {
      * 1: Smooth
      */
     private void setMoveType(int type) {
-        UnityPlayer.UnitySendMessage("Helicopter", "setMoveType", Integer.toString(type));
+        UnityPlayer.UnitySendMessage(PLAYER_NAME, "setMoveType", Integer.toString(type));
     }
 
     private void setMoveScale(float scale) {
-        UnityPlayer.UnitySendMessage("Helicopter", "setMoveScale", Float.toString(scale));
+        UnityPlayer.UnitySendMessage(PLAYER_NAME, "setMoveScale", Float.toString(scale));
     }
 
     private void setIsFollowPlayer(boolean b) {
-        UnityPlayer.UnitySendMessage("MainCamera", "setIsFollowPlayer", b ? "True": "False");
+        UnityPlayer.UnitySendMessage(MAIN_CAMERA, "setIsFollowPlayer", b ? "True": "False");
     }
 
     private void setCamMoveSmoothTime(float time) {
-        UnityPlayer.UnitySendMessage("MainCamera", "setMoveSmoothTime", Float.toString(time));
+        UnityPlayer.UnitySendMessage(MAIN_CAMERA, "setMoveSmoothTime", Float.toString(time));
     }
 
     private void setCamMoveInterpolant(float interpolant) {
-        UnityPlayer.UnitySendMessage("MainCamera", "setMoveInterpolant", Float.toString(interpolant));
+        UnityPlayer.UnitySendMessage(MAIN_CAMERA, "setMoveInterpolant", Float.toString(interpolant));
     }
 
     private void initUnityPlayer() {
