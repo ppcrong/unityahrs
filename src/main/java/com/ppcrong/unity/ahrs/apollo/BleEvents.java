@@ -28,7 +28,7 @@ public class BleEvents {
         }
     }
 
-    public static class NotifyAhrsRotateEvent {
+    public static class NotifyAhrsRotateQuaternionEvent {
 
         /*
          * Quaternion components x,y,z,w
@@ -39,10 +39,10 @@ public class BleEvents {
         private float w;
 
         // Apollo MUST: no-arg ctr
-        public NotifyAhrsRotateEvent() {
+        public NotifyAhrsRotateQuaternionEvent() {
         }
 
-        public NotifyAhrsRotateEvent(float x, float y, float z, float w) {
+        public NotifyAhrsRotateQuaternionEvent(float x, float y, float z, float w) {
             this.x = x;
             this.y = y;
             this.z = z;
@@ -52,6 +52,31 @@ public class BleEvents {
         @Override
         public String toString() {
             return x + "," + y + "," + z + "," + w;
+        }
+    }
+
+    public static class NotifyAhrsRotateEularEvent {
+
+        /*
+         * Eular components x,y,z
+         */
+        private float x;
+        private float y;
+        private float z;
+
+        // Apollo MUST: no-arg ctr
+        public NotifyAhrsRotateEularEvent() {
+        }
+
+        public NotifyAhrsRotateEularEvent(float x, float y, float z) {
+            this.x = x;
+            this.y = y;
+            this.z = z;
+        }
+
+        @Override
+        public String toString() {
+            return x + "," + y + "," + z;
         }
     }
 }

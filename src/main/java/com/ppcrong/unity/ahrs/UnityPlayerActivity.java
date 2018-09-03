@@ -159,17 +159,26 @@ public class UnityPlayerActivity extends Activity {
 //        setMovement(event);
     }
 
-    @Receive("BleEvents.NotifyAhrsRotateEvent")
-    public void onNotifyAhrsRotateEvent(BleEvents.NotifyAhrsRotateEvent event) {
+    @Receive("BleEvents.NotifyAhrsRotateQuaternionEvent")
+    public void onNotifyAhrsRotateQuaternionEvent(BleEvents.NotifyAhrsRotateQuaternionEvent event) {
 
-        KLog.i("AhrsRotate: " + event.toString());
-        setRotation(event);
+        KLog.i("AhrsRotateQuaternion: " + event.toString() + ",0,0,0");
+//        setRotation(event, new BleEvents.NotifyAhrsRotateEularEvent());
+    }
+
+    @Receive("BleEvents.NotifyAhrsRotateEularEvent")
+    public void onNotifyAhrsRotateEularEvent(BleEvents.NotifyAhrsRotateEularEvent event) {
+
+        KLog.i("AhrsRotateEular: " + "0,0,0,0," + event.toString());
+        setRotation(new BleEvents.NotifyAhrsRotateQuaternionEvent(), event);
     }
     // endregion [Apollo]
 
     // region [Private Function]
-    private void setRotation(BleEvents.NotifyAhrsRotateEvent event) {
-        UnityPlayer.UnitySendMessage(PLAYER_NAME, "setRotation", event.toString());
+    private void setRotation(BleEvents.NotifyAhrsRotateQuaternionEvent eventQ,
+                             BleEvents.NotifyAhrsRotateEularEvent eventE) {
+        UnityPlayer.UnitySendMessage(PLAYER_NAME, "setRotation",
+                eventQ.toString() + "," + eventE.toString());
     }
 
     private void setMovement(BleEvents.NotifyAhrsMoveEvent event) {
@@ -186,8 +195,10 @@ public class UnityPlayerActivity extends Activity {
 
     /*
      * Rotate type
-     * 0: Direct
-     * 1: Smooth
+     * 0: Direct Quaternion
+     * 1: Smooth Quaternion
+     * 2: Direct Eular
+     * 3: Smooth Eular
      */
     private void setRotateType(int type) {
         UnityPlayer.UnitySendMessage(PLAYER_NAME, "setRotateType", Integer.toString(type));
@@ -207,7 +218,7 @@ public class UnityPlayerActivity extends Activity {
     }
 
     private void setIsFollowPlayer(boolean b) {
-        UnityPlayer.UnitySendMessage(MAIN_CAMERA, "setIsFollowPlayer", b ? "True": "False");
+        UnityPlayer.UnitySendMessage(MAIN_CAMERA, "setIsFollowPlayer", b ? "True" : "False");
     }
 
     private void setCamMoveSmoothTime(float time) {
@@ -358,7 +369,8 @@ public class UnityPlayerActivity extends Activity {
             // Rotation
             for (int i = 0; i < mRotations.length; i++) {
 
-                setRotation(new BleEvents.NotifyAhrsRotateEvent(mRotations[i][0], mRotations[i][1], mRotations[i][2], mRotations[i][3]));
+                setRotation(new BleEvents.NotifyAhrsRotateQuaternionEvent(mRotations[i][0], mRotations[i][1], mRotations[i][2], mRotations[i][3]),
+                        new BleEvents.NotifyAhrsRotateEularEvent());
                 KLog.i("qx: " + mRotations[i][0] + ", qy: " + mRotations[i][1] + ", qz: " + mRotations[i][2] + ", qw: " + mRotations[i][3]);
 
                 // Wait
