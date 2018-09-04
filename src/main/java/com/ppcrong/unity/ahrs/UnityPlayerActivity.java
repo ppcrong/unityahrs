@@ -163,45 +163,45 @@ public class UnityPlayerActivity extends Activity {
     public void onNotifyAhrsRotateQuaternionEvent(BleEvents.NotifyAhrsRotateQuaternionEvent event) {
 
         KLog.i("AhrsRotateQuaternion: " + event.toString() + ",0,0,0");
-//        setRotation(event, new BleEvents.NotifyAhrsRotateEularEvent());
+//        setRotation(event, new BleEvents.NotifyAhrsRotateEulerEvent());
     }
 
-    @Receive("BleEvents.NotifyAhrsRotateEularEvent")
-    public void onNotifyAhrsRotateEularEvent(BleEvents.NotifyAhrsRotateEularEvent event) {
+    @Receive("BleEvents.NotifyAhrsRotateEulerEvent")
+    public void onNotifyAhrsRotateEulerEvent(BleEvents.NotifyAhrsRotateEulerEvent event) {
 
-        KLog.i("AhrsRotateEular: " + "0,0,0,0," + event.toString());
+        KLog.i("AhrsRotateEuler: " + "0,0,0,0," + event.toString());
         setRotation(new BleEvents.NotifyAhrsRotateQuaternionEvent(), event);
     }
     // endregion [Apollo]
 
     // region [Private Function]
     private void setRotation(BleEvents.NotifyAhrsRotateQuaternionEvent eventQ,
-                             BleEvents.NotifyAhrsRotateEularEvent eventE) {
-        UnityPlayer.UnitySendMessage(PLAYER_NAME, "setRotation",
+                             BleEvents.NotifyAhrsRotateEulerEvent eventE) {
+        UnityPlayer.UnitySendMessage(PLAYER_NAME, "SetRotation",
                 eventQ.toString() + "," + eventE.toString());
     }
 
     private void setMovement(BleEvents.NotifyAhrsMoveEvent event) {
-        UnityPlayer.UnitySendMessage(PLAYER_NAME, "setMovement", event.toString());
+        UnityPlayer.UnitySendMessage(PLAYER_NAME, "SetMovement", event.toString());
     }
 
     private void setRotateInterpolant(float interpolant) {
-        UnityPlayer.UnitySendMessage(PLAYER_NAME, "setRotateInterpolant", Float.toString(interpolant));
+        UnityPlayer.UnitySendMessage(PLAYER_NAME, "SetRotateInterpolant", Float.toString(interpolant));
     }
 
     private void setMoveInterpolant(float interpolant) {
-        UnityPlayer.UnitySendMessage(PLAYER_NAME, "setMoveInterpolant", Float.toString(interpolant));
+        UnityPlayer.UnitySendMessage(PLAYER_NAME, "SetMoveInterpolant", Float.toString(interpolant));
     }
 
     /*
      * Rotate type
      * 0: Direct Quaternion
      * 1: Smooth Quaternion
-     * 2: Direct Eular
-     * 3: Smooth Eular
+     * 2: Direct Euler
+     * 3: Smooth Euler
      */
     private void setRotateType(int type) {
-        UnityPlayer.UnitySendMessage(PLAYER_NAME, "setRotateType", Integer.toString(type));
+        UnityPlayer.UnitySendMessage(PLAYER_NAME, "SetRotateType", Integer.toString(type));
     }
 
     /*
@@ -210,23 +210,23 @@ public class UnityPlayerActivity extends Activity {
      * 1: Smooth
      */
     private void setMoveType(int type) {
-        UnityPlayer.UnitySendMessage(PLAYER_NAME, "setMoveType", Integer.toString(type));
+        UnityPlayer.UnitySendMessage(PLAYER_NAME, "SetMoveType", Integer.toString(type));
     }
 
     private void setMoveScale(float scale) {
-        UnityPlayer.UnitySendMessage(PLAYER_NAME, "setMoveScale", Float.toString(scale));
+        UnityPlayer.UnitySendMessage(PLAYER_NAME, "SetMoveScale", Float.toString(scale));
     }
 
     private void setIsFollowPlayer(boolean b) {
-        UnityPlayer.UnitySendMessage(MAIN_CAMERA, "setIsFollowPlayer", b ? "True" : "False");
+        UnityPlayer.UnitySendMessage(MAIN_CAMERA, "SetIsFollowPlayer", b ? "True" : "False");
     }
 
     private void setCamMoveSmoothTime(float time) {
-        UnityPlayer.UnitySendMessage(MAIN_CAMERA, "setMoveSmoothTime", Float.toString(time));
+        UnityPlayer.UnitySendMessage(MAIN_CAMERA, "SetMoveSmoothTime", Float.toString(time));
     }
 
     private void setCamMoveInterpolant(float interpolant) {
-        UnityPlayer.UnitySendMessage(MAIN_CAMERA, "setMoveInterpolant", Float.toString(interpolant));
+        UnityPlayer.UnitySendMessage(MAIN_CAMERA, "SetMoveInterpolant", Float.toString(interpolant));
     }
 
     private void initUnityPlayer() {
@@ -370,7 +370,7 @@ public class UnityPlayerActivity extends Activity {
             for (int i = 0; i < mRotations.length; i++) {
 
                 setRotation(new BleEvents.NotifyAhrsRotateQuaternionEvent(mRotations[i][0], mRotations[i][1], mRotations[i][2], mRotations[i][3]),
-                        new BleEvents.NotifyAhrsRotateEularEvent());
+                        new BleEvents.NotifyAhrsRotateEulerEvent());
                 KLog.i("qx: " + mRotations[i][0] + ", qy: " + mRotations[i][1] + ", qz: " + mRotations[i][2] + ", qw: " + mRotations[i][3]);
 
                 // Wait

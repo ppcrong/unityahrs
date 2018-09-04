@@ -55,20 +55,20 @@ public class BleEvents {
         }
     }
 
-    public static class NotifyAhrsRotateEularEvent {
+    public static class NotifyAhrsRotateEulerEvent {
 
         /*
-         * Eular components x,y,z
+         * Euler components x,y,z
          */
         private float x;
         private float y;
         private float z;
 
         // Apollo MUST: no-arg ctr
-        public NotifyAhrsRotateEularEvent() {
+        public NotifyAhrsRotateEulerEvent() {
         }
 
-        public NotifyAhrsRotateEularEvent(float x, float y, float z) {
+        public NotifyAhrsRotateEulerEvent(float x, float y, float z) {
             this.x = x;
             this.y = y;
             this.z = z;
