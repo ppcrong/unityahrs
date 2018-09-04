@@ -236,7 +236,7 @@ public class UnityPlayerActivity extends Activity {
         setMoveInterpolant(0.1f);
 
         // Set type
-        setRotateType(0);
+        setRotateType(2);
         setMoveType(1);
 
         // Set movement scale
