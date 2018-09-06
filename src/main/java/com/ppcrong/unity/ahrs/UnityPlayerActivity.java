@@ -156,7 +156,7 @@ public class UnityPlayerActivity extends Activity {
     public void onNotifyAhrsMoveEvent(BleEvents.NotifyAhrsMoveEvent event) {
 
         KLog.i("AhrsMove: " + event.toString());
-//        setMovement(event);
+        setMovement(event);
     }
 
     @Receive("BleEvents.NotifyAhrsRotateQuaternionEvent")
