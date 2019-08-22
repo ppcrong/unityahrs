@@ -40,13 +40,13 @@ android {
     buildTypes {
         debug {
             minifyEnabled false
-            useProguard false
+//            useProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-unity.txt'
             jniDebuggable true
         }
         release {
             minifyEnabled false
-            useProguard false
+//            useProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-unity.txt'
             signingConfig signingConfigs.debug
         }
