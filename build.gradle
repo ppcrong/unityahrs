@@ -56,4 +56,9 @@ android {
         doNotStrip '*/armeabi-v7a/*.so'
     }
 
+    // Show deprecated APIs when compile
+    tasks.withType(JavaCompile) {
+        options.compilerArgs << '-Xlint:unchecked'
+        options.deprecation = true
+    }
 }
