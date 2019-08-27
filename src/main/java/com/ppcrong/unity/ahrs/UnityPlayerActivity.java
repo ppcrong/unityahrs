@@ -123,6 +123,7 @@ public class UnityPlayerActivity extends Activity {
 
     // For some reason the multiple keyevent type is not supported by the ndk.
     // Force event injection by overriding dispatchKeyEvent().
+    @SuppressWarnings("deprecation") // ACTION_MULTIPLE is deprecated since API29 (Android Q)
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
         if (event.getAction() == KeyEvent.ACTION_MULTIPLE)
